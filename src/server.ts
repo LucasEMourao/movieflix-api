@@ -1,5 +1,7 @@
 import express from "express"
 import { PrismaClient } from "@prisma/client";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../swagger.json"
 
 const port = 3000;
 const app = express();
@@ -19,6 +21,7 @@ app.get("/movies", async (_, res) => {
 });
 
 app.use(express.json());
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.post("/movies", async (req, res) => {
    const { title, genre_id, language_id, oscar_count, release_date } = req.body;
